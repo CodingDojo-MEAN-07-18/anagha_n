@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey Form Revisited</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript">
+        var socket = io.connect("http://localhost:8000");
+        $(function() {
+            $("form").submit(function(e) {
+                e.preventDefault();
+                var formValues = $(this).serialize();
+                socket.emit("posting_form", {response: formValues});
+                return false;
+            });
+            socket.on("updated_message", function(server_data) {
+                $("#server-response").append(server_data.response).show();
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div id="wrapper">
+
+    <h1>Survey Form Revisited</h1>
+
+    <div id="server-response"></div>
+
+    <form action="result" method="post">
+        <p><label for="name">Name:</label>
+            <input type="text" name="name"/></p>
+
+        <p>
+            <label for="dojo_location">Dojo Location:</label>
+            <select name="dojo_location">
+                <option value="East Bay">East Bay</option>
+                <option value="Mountain View">Mountain View</option>
+                <option value="San Jose">San Jose</option>
+                <option value="Burbank">Burbank</option>
+                <option value="Seattle">Seattle</option>
+            </select>
+        </p>
+
+        <p>
+            <label for="fav_language">Favorite Language</label>
+            <select name="fav_language">
+                <option value="C#">C#</option>                
+                <option value="JavaScript">JavaScript</option>
+                <option value="Python">Python</option>
+                <option value="Ruby">Ruby</option>
+            </select>
+        </p>
+
+        <p><label for="comment">Comment (optional):</label><br /><br />
+            <textarea name="comment"></textarea>
+        </p>
+
+        <p>
+            <input type="submit" value="Submit"/>
+        </p>
+    </form>
+
+</div>
+
+</body>
+</html>
