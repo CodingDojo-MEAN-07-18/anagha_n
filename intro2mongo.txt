@@ -1,0 +1,5 @@
+db.createCollection('students')
+db.students.insert(\{name: 'Anu', city: 'San Francisco'\})
+db.students.insert(\{name:'Adi', city:'New Jersey'\})
+db.students.find().pretty()
+db.students.remove(\{name:'Anu \})

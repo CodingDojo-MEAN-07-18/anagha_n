@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quoting Dojo</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+</head>
+<body>
+
+<div id="wrapper">
+    <h1>Here are the awesome quotes!</h1>
+
+    <%
+    var monthName = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+    %>
+
+    <% for(var i = quotes.length - 1; i > -1; i--) { %>
+       <div class="quote">
+           <p>&ldquo;<%= quotes[i].quote %>&rdquo;</p>
+           <p>&mdash; <%= quotes[i].name %> at <%= quotes[i].updated_at.getHours() %>:<%= ("0" + quotes[i].updated_at.getMinutes()).slice(-2) %>, <%= monthName[quotes[i].updated_at.getMonth()] %> <%= quotes[i].updated_at.getDate() %>, <%= quotes[i].updated_at.getFullYear() %></p>
+           <% if(i != 0){ %>
+                <hr />
+           <% } %>
+       </div>
+    <% } %>
+
+    <p><a class="right" href="/">Go Home!</a></p>
+
+</div>
+
+</body>
